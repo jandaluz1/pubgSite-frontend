@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import StatCard from './StatCard';
+import {
+  Switch,
+  FormGroup,
+  FormControlLabel,
+  Typography
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
 const data = {
@@ -237,22 +243,54 @@ const data = {
 const styles = theme => ({
   container: {
     display: 'flex',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    justifyContent: 'space-between'
+  },
+  gameCard: {
+    padding: theme.spacing.unit * 4
   }
 });
-const Player = props => {
-  console.log(data.gameModeStats['squad-fpp']);
-  const { classes } = props;
-  const gameTypes = Object.keys(data.gameModeStats);
-  return (
-    <div className={classes.container}>
-      {gameTypes.map(type => {
-        const stats = data.gameModeStats[type];
-        return <StatCard name={type} data={stats} key={type} />;
-      })}
-      {/* <StatCard /> */}
-    </div>
-  );
-};
+class Player extends Component {
+  state = {
+    mode: 'fpp'
+  };
+
+  handleChange = event => {
+    this.state.mode !== 'fpp'
+      ? this.setState({ mode: 'fpp' })
+      : this.setState({ mode: 'tpp' });
+  };
+  render() {
+    const { classes } = this.props;
+    const fppMode = ['solo-fpp', 'duo-fpp', 'squad-fpp'];
+    const tppMode = ['solo', 'duo', 'squad'];
+    const mode = this.state.mode;
+    const gameType = mode === 'fpp' ? fppMode : tppMode;
+    return (
+      <React.Fragment>
+        <Typography variant="h2" align="center">
+          Season Stats
+        </Typography>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch checked={mode === 'fpp'} onChange={this.handleChange} />
+            }
+            label={mode === 'fpp' ? 'fpp' : 'tpp'}
+          />
+        </FormGroup>
+        <div className={classes.container}>
+          {gameType.map(type => {
+            const stats = data.gameModeStats[type];
+            return <StatCard name={type} data={stats} key={type} />;
+          })}
+        </div>
+        <Typography variant="h2" align="center">
+          Matches
+        </Typography>
+      </React.Fragment>
+    );
+  }
+}
 
 export default withStyles(styles)(Player);

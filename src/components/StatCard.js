@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
@@ -6,6 +6,11 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 // const data = {
 //   'squad-fpp': {
@@ -60,26 +65,57 @@ const styles = {
   }
 };
 
-function StatCard(props) {
-  const { classes, data, name } = props;
-  console.log(data);
-  return (
-    <Card className={classes.card}>
-      <CardContent>
-        <Typography
-          className={classes.title}
-          color="textSecondary"
-          gutterBottom
-        >
-          {name} Best Rank: {data.bestRankPoint.toFixed(0)}
-        </Typography>
-        <Typography>Kills: {data.kills}</Typography>
-        <Typography>Wins: {data.wins}</Typography>
-        <Typography>Top10s: {data.top10s}</Typography>
-        <Typography>Games: {data.wins + data.losses}</Typography>
-      </CardContent>
-    </Card>
-  );
+class StatCard extends Component {
+  render() {
+    const { classes, data, name } = this.props;
+    console.log(data);
+    const numOfGames = data.wins + data.losses;
+    return (
+      <Card className={classes.card}>
+        <CardContent>
+          <Typography
+            className={classes.title}
+            color="textSecondary"
+            gutterBottom
+          >
+            {name}
+          </Typography>
+          <Table>
+            <TableHead>
+              <TableCell>Best Rank: {data.bestRankPoint.toFixed(0)}</TableCell>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>Kills: {data.kills}</TableCell>
+                <TableCell>Wins: {data.wins}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Assists: {data.assists}</TableCell>
+                <TableCell>Top10s: {data.top10s}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  K/D:{' '}
+                  {data.kills === 0 ? 0 : (data.kills / numOfGames).toFixed(2)}
+                </TableCell>
+                <TableCell>
+                  Average Damage:{' '}
+                  {data.damageDealt === 0
+                    ? 0
+                    : Math.floor(data.damageDealt / numOfGames)}
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </CardContent>
+        <CardActions>
+          <Button variant="flat" size="small">
+            More Stats
+          </Button>
+        </CardActions>
+      </Card>
+    );
+  }
 }
 
 StatCard.propTypes = {
