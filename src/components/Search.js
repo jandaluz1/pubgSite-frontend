@@ -45,6 +45,7 @@ class Search extends Component {
           onChange={this.handleChange('name')}
           variant="outlined"
           height="1em"
+          fullWidth
         />
         <Button className={classes.button} variant="contained" color="default">
           <SearchIcon

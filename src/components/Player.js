@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import StatCard from './StatCard';
 import MatchCard from './MatchCard';
+import Appbar from './Appbar';
 import {
   Switch,
   FormGroup,
@@ -40,6 +41,7 @@ class Player extends Component {
     const gameType = mode === 'fpp' ? fppMode : tppMode;
     return (
       <React.Fragment>
+        <Appbar />
         <Typography variant="h2" align="center">
           Season Stats
         </Typography>
