@@ -80,10 +80,8 @@ class StatCard extends Component {
           >
             {name}
           </Typography>
+          <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography>
           <Table>
-            <TableHead>
-              <TableCell>Best Rank: {data.bestRankPoint.toFixed(0)}</TableCell>
-            </TableHead>
             <TableBody>
               <TableRow>
                 <TableCell>Kills: {data.kills}</TableCell>
@@ -109,7 +107,7 @@ class StatCard extends Component {
           </Table>
         </CardContent>
         <CardActions>
-          <Button variant="flat" size="small">
+          <Button variant="text" size="small">
             More Stats
           </Button>
         </CardActions>
