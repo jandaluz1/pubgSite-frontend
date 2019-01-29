@@ -67,15 +67,14 @@ class StatsDialog extends Component {
               <TableCell>Top10s: {data.top10s}</TableCell>
               <TableCell>
                 Average Time Survied:{' '}
-                {data.timeSurvived === 0
-                  ? 0
-                  : ((data.timeSurvived / numOfGames).toFixed(0) / 60).toFixed(
-                      1
-                    )}
+                {Math.floor(data.timeSurvived / numOfGames / 60)}:
+                {Math.floor((data.timeSurvived / numOfGames) % 60) > 9
+                  ? Math.floor((data.timeSurvived / numOfGames) % 60)
+                  : '0' + Math.floor((data.timeSurvived / numOfGames) % 60)}
               </TableCell>
               <TableCell>
                 Average Distance Traveled:{' '}
-                {distance === 0 ? 0 : (distance / numOfGames).toFixed(2)}meters
+                {distance === 0 ? 0 : (distance / numOfGames).toFixed(2)} meters
               </TableCell>
             </TableRow>
           </TableBody>
