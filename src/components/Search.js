@@ -28,14 +28,12 @@ class Search extends Component {
   state = {
     name: ''
   };
+
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
-  onClick = () => {
-    console.log('Clicked search');
-  };
+
   render() {
-    console.log(this.props);
     const { classes, searchOnClick } = this.props;
     return (
       <div className={classes.container}>
@@ -59,21 +57,15 @@ class Search extends Component {
 }
 
 const mapDispatch = dispatch => ({
-  searchOnClick: name => {
-    dispatch(fetchPlayerInfo(name));
+  searchOnClick: async name => {
+    await dispatch(fetchPlayerInfo(name));
     history.push('/player');
   }
 });
 
-const mapState = state => ({
-  id: state.id,
-  matches: state.matches,
-  stats: state.stats
-});
-
 export default withStyles(styles)(
   connect(
-    mapState,
+    null,
     mapDispatch
   )(Search)
 );

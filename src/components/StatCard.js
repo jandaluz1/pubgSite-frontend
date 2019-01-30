@@ -41,7 +41,6 @@ class StatCard extends Component {
 
   render() {
     const { classes, data, name } = this.props;
-    console.log(data);
     const numOfGames = data.wins + data.losses;
     return (
       <Card className={classes.card}>

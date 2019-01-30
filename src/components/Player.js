@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import StatCard from './StatCard';
+import Matches from './Matches';
 import MatchCard from './MatchCard';
 import Appbar from './Appbar';
 import {
@@ -27,14 +28,17 @@ class Player extends Component {
   state = {
     mode: 'fpp'
   };
-
+  componentDidMount() {
+    const { loadStats, id } = this.props;
+    loadStats(id);
+  }
   handleChange = event => {
     this.state.mode !== 'fpp'
       ? this.setState({ mode: 'fpp' })
       : this.setState({ mode: 'tpp' });
   };
   render() {
-    const { classes, id, stats, matches } = this.props;
+    const { classes, stats, matches } = this.props;
     const fppMode = ['solo-fpp', 'duo-fpp', 'squad-fpp'];
     const tppMode = ['solo', 'duo', 'squad'];
     const mode = this.state.mode;
@@ -67,19 +71,18 @@ class Player extends Component {
           Matches
         </Typography>
         <div>
-          <MatchCard />
+          <Matches />
         </div>
       </React.Fragment>
     );
   }
 }
 const mapState = (state, ownProps) => {
-  console.log('STATE', state);
-  console.log('OWNPROPS', ownProps);
   return {
-    id: state.id,
-    stats: state.stats,
-    matches: state.matches
+    id: state.player.id,
+    stats: state.player.stats,
+    matchIds: state.player.matches,
+    matches: state.matchInfo
   };
 };
 
