@@ -9,25 +9,21 @@ import {
   Typography
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-// import { default as match } from '../data/match.json';
+
+const styles = theme => ({
+  paper: {
+    background: theme.palette.background.default
+  }
+});
 
 class MatchCard extends Component {
   render() {
-    const { name, match } = this.props;
+    const { name, match, classes } = this.props;
     // console.log(match);
     const player = match.included.filter(
       obj => obj.type === 'participant' && obj.attributes.stats.name === name
     )[0];
-    // console.log('JOE', joe);
-    // const rosters = match.included.filter(
-    //   obj =>
-    //     obj.type === 'roster' &&
-    //     obj.relationships.participants.data.includes({
-    //       type: 'participant',
-    //       id: joe.id
-    //     })
-    // );
-    // console.log('ROSTER', rosters);
+
     return (
       <Paper>
         <Typography>
@@ -61,4 +57,4 @@ class MatchCard extends Component {
 const mapState = state => ({
   name: state.player.name
 });
-export default connect(mapState)(MatchCard);
+export default withStyles(styles)(connect(mapState)(MatchCard));

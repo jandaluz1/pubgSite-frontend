@@ -43,7 +43,7 @@ export const fetchPlayerInfo = name => async dispatch => {
     await dispatch(setName(name));
     await dispatch(setMatches(matches));
   } catch (err) {
-    console.error(err);
+    throw err;
   }
 };
 

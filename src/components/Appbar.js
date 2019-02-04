@@ -16,10 +16,13 @@ function SimpleAppBar(props) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="inherit">
         <Toolbar>
-          <Typography variant="h6" color="inherit">
-            PubgStats
+          <Typography variant="h5" color="secondary" inline>
+            PUBG
+          </Typography>
+          <Typography variant="h5" color="blck" inline>
+            stats
           </Typography>
         </Toolbar>
       </AppBar>

@@ -5,27 +5,30 @@ import {
   Card,
   CardActions,
   CardContent,
+  CardHeader,
   Button,
   Typography,
   Table,
   TableBody,
   TableCell,
   TableRow,
-  Modal
+  Grid
 } from '@material-ui/core';
+import { borderBottom, borderColor } from '@material-ui/system';
 import StatsDialog from './StatsDialog';
 
-const styles = {
+const styles = theme => ({
   card: {
     minWidth: 275
   },
   title: {
-    fontSize: 14
+    fontSize: 16,
+    color: 'black'
   },
   pos: {
     marginBottom: 12
   }
-};
+});
 
 class StatCard extends Component {
   state = {
@@ -40,46 +43,88 @@ class StatCard extends Component {
   };
 
   render() {
-    const { classes, data, name } = this.props;
+    const { classes, data } = this.props;
+    const name = this.props.name.toUpperCase().replace('-', ' ');
     const numOfGames = data.wins + data.losses;
+
     return (
       <Card className={classes.card}>
-        <CardContent>
-          <Typography
+        <CardHeader
+          disableTypography
+          title={<Typography className={classes.title}>{name}</Typography>}
+          subheader={
+            <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography>
+          }
+        >
+          {/* <Typography
             className={classes.title}
             color="textSecondary"
             gutterBottom
           >
             {name}
-          </Typography>
-          <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography>
+          </Typography> */}
+        </CardHeader>
+        <CardContent>
+          {/* <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography> */}
           <Table>
             <TableBody>
               <TableRow>
-                <TableCell>Kills: {data.kills}</TableCell>
-                <TableCell>Wins: {data.wins}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell>Assists: {data.assists}</TableCell>
-                <TableCell>Top10s: {data.top10s}</TableCell>
-              </TableRow>
-              <TableRow>
                 <TableCell>
-                  K/D:{' '}
-                  {data.kills === 0 ? 0 : (data.kills / numOfGames).toFixed(2)}
+                  <Typography>Kills:</Typography>
+                  <Typography variant="subtitle1" color="secondary">
+                    {data.kills}
+                  </Typography>
                 </TableCell>
                 <TableCell>
-                  Average Damage:{' '}
-                  {data.damageDealt === 0
-                    ? 0
-                    : Math.floor(data.damageDealt / numOfGames)}
+                  <Typography>Wins:</Typography>
+                  <Typography variant="subtitle1" color="secondary">
+                    {data.wins}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography>Assists: </Typography>
+                  <Typography variant="subtitle1" color="secondary">
+                    {data.assists}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>Top10s:</Typography>
+                  <Typography variant="subtitle1" color="secondary">
+                    {data.top10s}
+                  </Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <Typography>K/D:</Typography>
+                  <Typography variant="subtitle1" color="secondary">
+                    {data.kills === 0
+                      ? 0
+                      : (data.kills / numOfGames).toFixed(2)}
+                  </Typography>
+                </TableCell>
+                <TableCell>
+                  <Typography>Avg Damage:</Typography>
+                  <Typography variant="subtitle1" color="secondary">
+                    {data.damageDealt === 0
+                      ? 0
+                      : Math.floor(data.damageDealt / numOfGames)}
+                  </Typography>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
         </CardContent>
         <CardActions>
-          <Button onClick={this.handleOpen} variant="text" size="small">
+          <Button
+            fullWidth
+            onClick={this.handleOpen}
+            variant="text"
+            size="small"
+            color="secondary"
+          >
             More Stats
           </Button>
         </CardActions>

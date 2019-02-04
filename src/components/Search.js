@@ -45,7 +45,12 @@ class Search extends Component {
           height="1em"
           fullWidth
         />
-        <Button className={classes.button} variant="contained" color="default">
+        <Button
+          className={classes.button}
+          variant="contained"
+          color="secondary"
+          disabled={this.state.name.length < 1}
+        >
           <SearchIcon
             onClick={() => searchOnClick(this.state.name)}
             className={classes.iconSmall}

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import StatCard from './StatCard';
+import Stats from './Stats';
 import Matches from './Matches';
-import MatchCard from './MatchCard';
 import Appbar from './Appbar';
 import {
   Switch,
@@ -14,13 +13,10 @@ import { connect } from 'react-redux';
 import { fetchStats } from '../store';
 
 const styles = theme => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between'
-  },
-  gameCard: {
-    padding: theme.spacing.unit * 4
+  root: {
+    background: theme.palette.background.default,
+    width: '90%',
+    margin: 'auto'
   }
 });
 
@@ -38,16 +34,16 @@ class Player extends Component {
       : this.setState({ mode: 'tpp' });
   };
   render() {
-    const { classes, stats, matches } = this.props;
+    const { classes, stats, name } = this.props;
     const fppMode = ['solo-fpp', 'duo-fpp', 'squad-fpp'];
     const tppMode = ['solo', 'duo', 'squad'];
-    const mode = this.state.mode;
+    const { mode } = this.state;
     const gameType = mode === 'fpp' ? fppMode : tppMode;
     return (
-      <React.Fragment>
+      <div className={classes.root}>
         <Appbar />
-        <Typography variant="h2" align="center">
-          Season Stats
+        <Typography variant="h5" align="center">
+          Season Stats for {name}
         </Typography>
         <FormGroup>
           <FormControlLabel
@@ -57,30 +53,23 @@ class Player extends Component {
             label={mode === 'fpp' ? 'fpp' : 'tpp'}
           />
         </FormGroup>
-        <div className={classes.container}>
-          {Object.keys(stats).length !== 0 ? (
-            gameType.map(type => {
-              // const stats = data.gameModeStats[type];
-              return <StatCard name={type} data={stats[type]} key={type} />;
-            })
-          ) : (
-            <p>Loading...</p>
-          )}
-        </div>
-        <Typography variant="h2" align="center">
-          Matches
+
+        <Stats gameType={gameType} />
+
+        <Typography variant="h5" align="center">
+          Recently Played Matches
         </Typography>
+
         <div>
           <Matches />
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 }
-const mapState = (state, ownProps) => {
+const mapState = state => {
   return {
-    id: state.player.id,
-    stats: state.player.stats,
+    name: state.player.name,
     matchIds: state.player.matches,
     matches: state.matchInfo
   };
