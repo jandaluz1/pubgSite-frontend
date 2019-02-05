@@ -39,8 +39,8 @@ export const fetchPlayerInfo = name => async dispatch => {
   try {
     const res = await axios.get(`/api/player/${name}`);
     const { id, matches } = res.data;
-    await dispatch(setId(id));
     await dispatch(setName(name));
+    await dispatch(setId(id));
     await dispatch(setMatches(matches));
   } catch (err) {
     throw err;

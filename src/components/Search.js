@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, ButtonBase, Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import { fetchPlayerInfo } from '../store';
@@ -33,10 +33,17 @@ class Search extends Component {
     this.setState({ [name]: event.target.value });
   };
 
+  handleSubmit = name => event => {
+    const {search} = this.props
+    const {name} = this.state
+    event.preventDefault()
+    search(name)
+  }
+
   render() {
-    const { classes, searchOnClick } = this.props;
+    const { classes} = this.props;
     return (
-      <div className={classes.container}>
+      <form className={classes.container} onSubmit={this.handleSubmit('name')}>
         <TextField
           className={classes.input}
           value={this.state.name}
@@ -45,24 +52,25 @@ class Search extends Component {
           height="1em"
           fullWidth
         />
+        
         <Button
           className={classes.button}
           variant="contained"
           color="secondary"
+          type='submit'
           disabled={this.state.name.length < 1}
         >
           <SearchIcon
-            onClick={() => searchOnClick(this.state.name)}
             className={classes.iconSmall}
           />
         </Button>
-      </div>
+      </form>
     );
   }
 }
 
 const mapDispatch = dispatch => ({
-  searchOnClick: async name => {
+  search: async name => {
     await dispatch(fetchPlayerInfo(name));
     history.push('/player');
   }
