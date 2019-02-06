@@ -14,7 +14,7 @@ import { fetchStats } from '../store';
 
 const styles = theme => ({
   root: {
-    background: theme.palette.background.default,
+    background: 'inherit',
     width: '90%',
     margin: 'auto'
   }

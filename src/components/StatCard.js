@@ -56,16 +56,8 @@ class StatCard extends Component {
             <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography>
           }
         >
-          {/* <Typography
-            className={classes.title}
-            color="textSecondary"
-            gutterBottom
-          >
-            {name}
-          </Typography> */}
         </CardHeader>
         <CardContent>
-          {/* <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography> */}
           <Table>
             <TableBody>
               <TableRow>

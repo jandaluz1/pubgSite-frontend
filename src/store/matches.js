@@ -21,7 +21,7 @@ const initState = [];
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SET_MATCH_STATS:
-      return action.payload;
+      return [...state, ...action.payload]
     default:
       return state;
   }

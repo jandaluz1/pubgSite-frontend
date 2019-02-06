@@ -5,14 +5,13 @@ import Search from './Search';
 
 const styles = theme => ({
   heroRoot: {
-    backgroundColor: theme.palette.primary.dark,
     position: 'relative',
     display: 'flex',
     alignItems: 'center',
     height: '100vh'
   },
   hero: {
-    backgroundColor: 'red',
+    backgroundColor: theme.palette.background.paper,
     margin: 'auto',
     width: '40%'
   }
