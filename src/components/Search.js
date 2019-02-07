@@ -1,19 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { TextField, ButtonBase, Button } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import SearchIcon from '@material-ui/icons/Search';
-import { fetchPlayerInfo } from '../store';
-import history from '../history';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { TextField, Button } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import SearchIcon from "@material-ui/icons/Search";
+import { fetchPlayerInfo, clearMatchStats, clearPlayer } from "../store";
+import history from "../history";
 const styles = theme => ({
   container: {
-    display: 'flex'
+    display: "flex",
+    justifyContent: "center"
   },
   input: {
     margin: theme.spacing.unit,
     marginRight: 0,
-    height: '1em',
-    width: '80%'
+    fontSize: 20,
+    height: "1.5em",
+    width: "80%"
   },
   button: {
     margin: theme.spacing.unit,
@@ -26,7 +28,7 @@ const styles = theme => ({
 
 class Search extends Component {
   state = {
-    name: ''
+    name: ""
   };
 
   handleChange = name => event => {
@@ -34,35 +36,34 @@ class Search extends Component {
   };
 
   handleSubmit = name => event => {
-    const {search} = this.props
-    const {name} = this.state
-    event.preventDefault()
-    search(name)
-  }
+    const { search, reset } = this.props;
+    const { name } = this.state;
+    event.preventDefault();
+    reset();
+    search(name);
+  };
 
   render() {
-    const { classes} = this.props;
+    const { classes } = this.props;
     return (
-      <form className={classes.container} onSubmit={this.handleSubmit('name')}>
+      <form className={classes.container} onSubmit={this.handleSubmit("name")}>
         <TextField
           className={classes.input}
           value={this.state.name}
-          onChange={this.handleChange('name')}
+          onChange={this.handleChange("name")}
           variant="outlined"
-          height="1em"
-          fullWidth
+          height="2em"
+          placeholder="Player Name"
         />
-        
+
         <Button
           className={classes.button}
           variant="contained"
           color="secondary"
-          type='submit'
+          type="submit"
           disabled={this.state.name.length < 1}
         >
-          <SearchIcon
-            className={classes.iconSmall}
-          />
+          <SearchIcon className={classes.iconSmall} />
         </Button>
       </form>
     );
@@ -72,7 +73,11 @@ class Search extends Component {
 const mapDispatch = dispatch => ({
   search: async name => {
     await dispatch(fetchPlayerInfo(name));
-    history.push('/player');
+    history.push("/player");
+  },
+  reset: async () => {
+    dispatch(clearMatchStats());
+    dispatch(clearPlayer());
   }
 });
 

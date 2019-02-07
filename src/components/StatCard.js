@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
 import {
   Card,
   CardActions,
@@ -11,11 +11,9 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableRow,
-  Grid
-} from '@material-ui/core';
-import { borderBottom, borderColor } from '@material-ui/system';
-import StatsDialog from './StatsDialog';
+  TableRow
+} from "@material-ui/core";
+import StatsDialog from "./StatsDialog";
 
 const styles = theme => ({
   card: {
@@ -23,7 +21,7 @@ const styles = theme => ({
   },
   title: {
     fontSize: 16,
-    color: 'black'
+    color: "black"
   },
   pos: {
     marginBottom: 12
@@ -44,7 +42,7 @@ class StatCard extends Component {
 
   render() {
     const { classes, data } = this.props;
-    const name = this.props.name.toUpperCase().replace('-', ' ');
+    const name = this.props.name.toUpperCase().replace("-", " ");
     const numOfGames = data.wins + data.losses;
 
     return (
@@ -55,8 +53,7 @@ class StatCard extends Component {
           subheader={
             <Typography>Best Rank: {data.bestRankPoint.toFixed(0)}</Typography>
           }
-        >
-        </CardHeader>
+        />
         <CardContent>
           <Table>
             <TableBody>

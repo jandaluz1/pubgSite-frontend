@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const SET_MATCH_STATS = 'SET_MATCH_STATS';
+const CLEAR = 'CLEAR'
 
 export const setMatchStats = matchStats => ({
   type: SET_MATCH_STATS,
@@ -17,11 +18,17 @@ export const fetchMatchStats = matches => async dispatch => {
   }
 };
 
+export const clearMatchStats = () => ({
+  type: CLEAR
+})
+
 const initState = [];
 const reducer = (state = initState, action) => {
   switch (action.type) {
     case SET_MATCH_STATS:
       return [...state, ...action.payload]
+    case CLEAR:
+      return initState
     default:
       return state;
   }

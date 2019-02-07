@@ -7,4 +7,4 @@ const rootReducer = combineReducers({
   matchInfo: matchReducer
 });
 
-export default rootReducer;
+export default rootReducer; 

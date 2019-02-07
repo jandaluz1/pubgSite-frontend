@@ -10,3 +10,4 @@ const middleware = composeWithDevTools(applyMiddleware(ReduxThunk));
 const store = createStore(rootReducer, middleware);
 
 export default store;
+ 

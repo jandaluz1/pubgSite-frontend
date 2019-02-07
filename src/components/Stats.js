@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Grid } from '@material-ui/core';
-import { fetchStats } from '../store';
-import StatCard from './StatCard';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { Grid, CircularProgress } from "@material-ui/core";
+import { fetchStats } from "../store";
+import StatCard from "./StatCard";
 
 class Stats extends Component {
   componentDidMount() {
     const { id, loadStats } = this.props;
     loadStats(id);
   }
+
   render() {
     const { stats, gameType } = this.props;
     return (
@@ -23,7 +24,7 @@ class Stats extends Component {
             );
           })
         ) : (
-          <p>Loading...</p>
+          <CircularProgress color="secondary" />
         )}
       </Grid>
     );

@@ -1,44 +1,39 @@
-import React, { Component } from 'react';
-import Stats from './Stats';
-import Matches from './Matches';
-import Appbar from './Appbar';
+import React, { Component } from "react";
+import Stats from "./Stats";
+import Matches from "./Matches";
+import Appbar from "./Appbar";
 import {
   Switch,
   FormGroup,
   FormControlLabel,
   Typography
-} from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
-import { connect } from 'react-redux';
-import { fetchStats } from '../store';
+} from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
 
 const styles = theme => ({
   root: {
-    background: 'inherit',
-    width: '90%',
-    margin: 'auto'
+    background: "inherit",
+    width: "90%",
+    margin: "auto"
   }
 });
 
 class Player extends Component {
   state = {
-    mode: 'fpp'
+    mode: "fpp"
   };
-  componentDidMount() {
-    const { loadStats, id } = this.props;
-    loadStats(id);
-  }
   handleChange = event => {
-    this.state.mode !== 'fpp'
-      ? this.setState({ mode: 'fpp' })
-      : this.setState({ mode: 'tpp' });
+    this.state.mode !== "fpp"
+      ? this.setState({ mode: "fpp" })
+      : this.setState({ mode: "tpp" });
   };
   render() {
-    const { classes, stats, name } = this.props;
-    const fppMode = ['solo-fpp', 'duo-fpp', 'squad-fpp'];
-    const tppMode = ['solo', 'duo', 'squad'];
+    const { classes, name } = this.props;
+    const fppMode = ["solo-fpp", "duo-fpp", "squad-fpp"];
+    const tppMode = ["solo", "duo", "squad"];
     const { mode } = this.state;
-    const gameType = mode === 'fpp' ? fppMode : tppMode;
+    const gameType = mode === "fpp" ? fppMode : tppMode;
     return (
       <div className={classes.root}>
         <Appbar />
@@ -48,9 +43,9 @@ class Player extends Component {
         <FormGroup>
           <FormControlLabel
             control={
-              <Switch checked={mode === 'fpp'} onChange={this.handleChange} />
+              <Switch checked={mode === "fpp"} onChange={this.handleChange} />
             }
-            label={mode === 'fpp' ? 'fpp' : 'tpp'}
+            label={mode === "fpp" ? "fpp" : "tpp"}
           />
         </FormGroup>
 
@@ -75,14 +70,4 @@ const mapState = state => {
   };
 };
 
-const mapDispatch = dispatch => {
-  return {
-    loadStats: id => dispatch(fetchStats(id))
-  };
-};
-export default withStyles(styles)(
-  connect(
-    mapState,
-    mapDispatch
-  )(Player)
-);
+export default withStyles(styles)(connect(mapState)(Player));

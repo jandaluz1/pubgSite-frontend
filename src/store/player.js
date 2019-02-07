@@ -4,6 +4,7 @@ const SET_ID = 'SET_ID';
 const SET_MATCHES = 'SET_MATCHES';
 const SET_STATS = 'SET_STATS';
 const SET_NAME = 'SET_NAME';
+const CLEAR = 'CLEAR'
 
 const setId = id => ({
   type: SET_ID,
@@ -24,6 +25,10 @@ const setName = name => ({
   type: SET_NAME,
   payload: name
 });
+
+export const clearPlayer = () => ({
+  type: CLEAR
+})
 
 export const fetchStats = id => async dispatch => {
   try {
@@ -64,6 +69,8 @@ const reducer = (state = initState, action) => {
       return { ...state, matches: action.payload };
     case SET_STATS:
       return { ...state, stats: action.payload };
+    case CLEAR:
+      return initState;
     default:
       return state;
   }
