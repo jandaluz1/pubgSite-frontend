@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import { fetchPlayerInfo, clearMatchStats, clearPlayer } from "../store";
@@ -36,54 +36,73 @@ class Search extends Component {
   };
 
   handleSubmit = name => event => {
-    const { search, reset } = this.props;
+    const { search } = this.props;
     const { name } = this.state;
     event.preventDefault();
-    reset();
     search(name);
   };
 
   render() {
     const { classes } = this.props;
+    const hasError = !!this.props.errorMessage;
     return (
-      <form className={classes.container} onSubmit={this.handleSubmit("name")}>
-        <TextField
-          className={classes.input}
-          value={this.state.name}
-          onChange={this.handleChange("name")}
-          variant="outlined"
-          height="2em"
-          placeholder="Player Name"
-        />
-
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="secondary"
-          type="submit"
-          disabled={this.state.name.length < 1}
+      <div>
+        <form
+          className={classes.container}
+          onSubmit={this.handleSubmit("name")}
         >
-          <SearchIcon className={classes.iconSmall} />
-        </Button>
-      </form>
+          <TextField
+            className={classes.input}
+            value={this.state.name}
+            onChange={this.handleChange("name")}
+            variant="outlined"
+            height="2em"
+            placeholder="Player Name"
+            error={hasError}
+          />
+
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="secondary"
+            type="submit"
+            disabled={this.state.name.length < 1}
+          >
+            <SearchIcon className={classes.iconSmall} />
+          </Button>
+        </form>
+        {hasError && (
+          <Typography variant="subtitle1" color="error">
+            {this.props.errorMessage}
+          </Typography>
+        )}
+      </div>
     );
   }
 }
 
-const mapDispatch = dispatch => ({
-  search: async name => {
-    await dispatch(fetchPlayerInfo(name));
-    history.push("/player");
-  },
-  reset: async () => {
-    dispatch(clearMatchStats());
-    dispatch(clearPlayer());
+const mapState = state => ({
+  errorMessage: state.player.errorMessage
+});
+
+const mapDispatch = (dispatch, ownProps) => ({
+  search: name => {
+    try {
+      dispatch(fetchPlayerInfo(name));
+    } catch (error) {
+      console.log("MAPDISPATCH", error);
+      console.log(ownProps);
+    }
   }
+  // reset: async () => {
+  //   dispatch(clearMatchStats());
+  //   dispatch(clearPlayer());
+  // }
 });
 
 export default withStyles(styles)(
   connect(
-    null,
+    mapState,
     mapDispatch
   )(Search)
 );
