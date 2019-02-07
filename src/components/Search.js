@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import { TextField, Button, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
-import { fetchPlayerInfo, clearMatchStats, clearPlayer } from "../store";
-import history from "../history";
+import { fetchPlayerInfo } from "../store";
 const styles = theme => ({
   container: {
     display: "flex",
